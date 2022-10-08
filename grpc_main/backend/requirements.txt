@@ -1,0 +1,12 @@
+opencv-python
+pyautogui
+pillow
+tkcap
+pydicom
+opencv_python
+matplotlib
+pandas
+tensorflow
+python-xlib
+grpcio==1.39.0
+grpcio-tools==1.39.0

@@ -1,0 +1,20 @@
+syntax="proto3";
+
+service Backend {
+    rpc load_image (img_path) returns (image);
+}
+
+service Backend {
+    rpc run_model();
+}
+
+message image {
+    string img_content = 1;
+    int32 width = 2;
+    int32 height = 3;
+}
+
+message img_path {
+    string path = 1;
+}
+
