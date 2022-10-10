@@ -4,6 +4,7 @@ service Backend {
     rpc load_image (img_path) returns (image);
 }
 
+## Mala definicion del metodo en el servicio del backend
 service Backend {
     rpc run_model();
 }
