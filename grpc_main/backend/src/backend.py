@@ -43,8 +43,8 @@ class BackendService(backend_pb2_grpc.BackendServicer):
         iterate = K.function([model.input], [pooled_grads, last_conv_layer.output[0]])
         pooled_grads_value, conv_layer_output_value = iterate(img)
         for filters in range(64):
-           conv_layer_output_value[:, :, filters] *= pooled_grads_value[filters]
-          # creating the heatmap
+            conv_layer_output_value[:, :, filters] *= pooled_grads_value[filters]
+        # creating the heatmap
         heatmap = np.mean(conv_layer_output_value, axis=-1)
         heatmap = np.maximum(heatmap, 0)  # ReLU
         heatmap /= np.max(heatmap)  # normalize
@@ -68,13 +68,13 @@ class BackendService(backend_pb2_grpc.BackendServicer):
         array = np.expand_dims(array, axis=-1)
         array = np.expand_dims(array, axis=0)
         return array
-    
+
     def predict(array):
-    #   1. call function to pre-process image: it returns image in batch format
+        #   1. call function to pre-process image: it returns image in batch format
         batch_array_img = preprocess(array)
-    #   2. call function to load model and predict: it returns predicted class and probability
+        #   2. call function to load model and predict: it returns predicted class and probability
         model = model_fun()
-    # model_cnn = tf.keras.models.load_model('conv_MLP_84.h5')
+        # model_cnn = tf.keras.models.load_model('conv_MLP_84.h5')
         prediction = np.argmax(model.predict(batch_array_img))
         proba = np.max(model.predict(batch_array_img)) * 100
         label = ""
@@ -84,10 +84,10 @@ class BackendService(backend_pb2_grpc.BackendServicer):
             label = "normal"
         if prediction == 2:
             label = "viral"
-    #   3. call function to generate Grad-CAM: it returns an image with a superimposed heatmap
+        #   3. call function to generate Grad-CAM: it returns an image with a superimposed heatmap
         heatmap = grad_cam(array)
         return (label, proba, heatmap)
-        
+
     def run_model(self):
         self.label, self.proba, self.heatmap = predict(self.array)
         self.img2 = Image.fromarray(self.heatmap)
@@ -109,3 +109,8 @@ def serve():
 
 if __name__ == "__main__":
     serve()
+
+
+"""
+El metodo model_fun() no esta implementado, los llamados hechos a la funcion preprocess no funcionan.
+"""
